@@ -7,7 +7,6 @@ com\pricecomparator\service\NewestDiscounts.class
 com\pricecomparator\model\PricePoint.class
 com\pricecomparator\model\Product.class
 com\pricecomparator\repository\DiscountRepository.class
-com\pricecomparator\model\PriceAlert.class
 com\pricecomparator\service\PriceDataService.class
 com\pricecomparator\model\Discount.class
 com\pricecomparator\service\BestDiscounts.class
@@ -15,9 +14,7 @@ com\pricecomparator\service\ValueUnit.class
 com\pricecomparator\loader\MarketDataLoader.class
 com\pricecomparator\validator\DiscountValidator.class
 com\pricecomparator\validator\Validator.class
-com\pricecomparator\service\PriceAlertService.class
 com\pricecomparator\app\App.class
 com\pricecomparator\app\App$1.class
 com\pricecomparator\repository\ProductRepository.class
-com\pricecomparator\repository\AlertRepository.class
 com\pricecomparator\repository\MarketDataRepository.class

@@ -3,6 +3,7 @@ package com.pricecomparator.repository;
 import com.pricecomparator.model.Product;
 import com.pricecomparator.model.Discount;
 import com.pricecomparator.loader.MarketDataLoader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -72,5 +73,40 @@ public class MarketDataRepository {
 
     public Discount getActiveDiscount(String store, String productId, String date) {
         return discountRepository.findDiscountForProduct(store, productId, date);
+    }
+
+    // --- Admin CRUD Operations for Discount ---
+    public void addDiscount(String store, String dateStr, Discount discount) {
+        discountRepository.addDiscount(store, dateStr, discount);
+    }
+    public void updateDiscount(String store, String dateStr, String productId, Discount newDiscount) {
+        discountRepository.updateDiscount(store, dateStr, productId, newDiscount);
+    }
+    public void deleteDiscount(String store, String dateStr, String productId) {
+        discountRepository.deleteDiscount(store, dateStr, productId);
+    }
+
+    // --- Admin CRUD Operations for Product ---
+    public void addProduct(String store, String dateStr, Product product) {
+        Map<String, List<Product>> products = productRepository.getProductsForDate(dateStr);
+        products.computeIfAbsent(store, k -> new ArrayList<>()).add(product);
+    }
+    public void updateProduct(String store, String dateStr, String productId, Product newProduct) {
+        Map<String, List<Product>> products = productRepository.getProductsForDate(dateStr);
+        if (products.containsKey(store)) {
+            List<Product> list = products.get(store);
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getId().equals(productId)) {
+                    list.set(i, newProduct);
+                    break;
+                }
+            }
+        }
+    }
+    public void deleteProduct(String store, String dateStr, String productId) {
+        Map<String, List<Product>> products = productRepository.getProductsForDate(dateStr);
+        if (products.containsKey(store)) {
+            products.get(store).removeIf(p -> p.getId().equals(productId));
+        }
     }
 } 
