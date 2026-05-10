@@ -36,7 +36,8 @@ mvn clean package
 
 ### Run the Application
 ```sh
-mvn exec:java -Dexec.mainClass="com.pricecomparator.app.App"
+mvn exec:java "-Dexec.mainClass=com.pricecomparator.app.App"
+
 ```
 Or run the generated JAR:
 ```sh
@@ -78,11 +79,6 @@ mvn clean test
   - You can filter by store (e.g., Kaufland, Lidl, Profi, or all stores).
   - Useful for quickly spotting new deals as soon as they are available.
 
-- **Price Alerts:**
-  - Set alerts for specific products to be notified when their price drops below a target value.
-  - Manage alerts: create, view, check, edit, and delete alerts.
-  - Alerts are checked against the latest product prices for the selected date.
-
 - **Value per Unit:**
   - Compare products by their price per standard unit (kg, l, buc, etc.).
   - Shows which store offers the best value for a given product ID.
@@ -108,4 +104,3 @@ mvn clean test
 ### API Endpoints
 - **No REST API is implemented by default.**
 - If you add endpoints, document them here with example requests and responses.
-

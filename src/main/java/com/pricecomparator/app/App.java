@@ -13,13 +13,10 @@ import com.pricecomparator.service.BestDiscounts;
 import com.pricecomparator.service.NewestDiscounts;
 import com.pricecomparator.repository.MarketDataRepository;
 import com.pricecomparator.repository.ProductRepository;
-import com.pricecomparator.repository.AlertRepository;
 import com.pricecomparator.repository.DiscountRepository;
 import com.pricecomparator.loader.MarketDataLoader;
 import com.pricecomparator.model.Product;
 import com.pricecomparator.model.Discount;
-import com.pricecomparator.model.PriceAlert;
-import com.pricecomparator.service.PriceAlertService;
 import com.pricecomparator.service.PriceDataService;
 import com.pricecomparator.service.ValueUnit;
 
@@ -28,9 +25,8 @@ public class App {
     private static final int OPTION_OPTIMIZE_BASKET = 1;
     private static final int OPTION_BEST_DISCOUNTS = 2;
     private static final int OPTION_NEWEST_DISCOUNTS = 3;
-    private static final int OPTION_PRICE_ALERT = 4;
-    private static final int OPTION_VALUE_PER_UNIT = 5;
-    private static final int OPTION_DATA_POINTS_ANALYSIS = 6;
+    private static final int OPTION_VALUE_PER_UNIT = 4;
+    private static final int OPTION_DATA_POINTS_ANALYSIS = 5;
     private static final int OPTION_EXIT = 0;
 
     private static final Map<Integer, List<String>> PREDEFINED_BASKETS = new LinkedHashMap<>();
@@ -41,7 +37,6 @@ public class App {
     private static BasketOptimizer basketOptimizer;
     private static BestDiscounts bestDiscounts;
     private static NewestDiscounts newestDiscounts;
-    private static PriceAlertService priceAlertService;
     private static ValueUnit valuePerUnit;
     private static String currentDate;
     
@@ -101,9 +96,6 @@ public class App {
                 case OPTION_NEWEST_DISCOUNTS:
                     handleNewestDiscounts(scanner);
                     break;
-                case OPTION_PRICE_ALERT:
-                    handlePriceAlerts(scanner);
-                    break;
                 case OPTION_VALUE_PER_UNIT:
                     handleValuePerUnit(scanner);
                     break;
@@ -127,9 +119,6 @@ public class App {
         bestDiscounts = new BestDiscounts(marketDataRepository);
         newestDiscounts = new NewestDiscounts(marketDataRepository);
         valuePerUnit = new ValueUnit(marketDataRepository);
-
-        AlertRepository alertRepository = new AlertRepository();
-        priceAlertService = new PriceAlertService(alertRepository, marketDataRepository);
     }
 
     private static void printMenu() {
@@ -137,7 +126,6 @@ public class App {
         System.out.println(OPTION_OPTIMIZE_BASKET + ") Manage basket");
         System.out.println(OPTION_BEST_DISCOUNTS + ") Show top discounts");
         System.out.println(OPTION_NEWEST_DISCOUNTS + ") Show newest discounts");
-        System.out.println(OPTION_PRICE_ALERT + ") View Price Alerts");
         System.out.println(OPTION_VALUE_PER_UNIT + ") Show best value per unit");
         System.out.println(OPTION_DATA_POINTS_ANALYSIS + ") Show data points for a specific product");
         System.out.println(OPTION_EXIT + ") Exit");
@@ -380,97 +368,6 @@ public class App {
         }
     }
 
-    private static void handlePriceAlerts(Scanner scanner) {
-        boolean done = false;
-        while (!done) {
-            System.out.println("\n==== Price Alerts ====");
-            System.out.println("1) Create new alert");
-            System.out.println("2) View active alerts");
-            System.out.println("3) Check alerts");
-            System.out.println("4) Edit an alert");
-            System.out.println("5) Delete an alert");
-            System.out.println("0) Back to main menu");
-            int choice = readInt(scanner, "Your choice: ");
-            switch (choice) {
-                case 1:
-                    createPriceAlert(scanner);
-                    break;
-                case 2:
-                    viewActiveAlerts();
-                    break;
-                case 3:
-                    checkAlerts(scanner);
-                    break;
-                case 4:
-                    editAlert(scanner);
-                    break;
-                case 5:
-                    deleteAlert(scanner);
-                    break;
-                case 0:
-                    done = true;
-                    break;
-                default:
-                    System.out.println("Invalid option.");
-            }
-        }
-    }
-
-    private static void createPriceAlert(Scanner scanner) {
-        scanner.nextLine(); 
-        System.out.print("Enter product ID: ");
-        String productId = scanner.nextLine().trim();
-        
-        System.out.print("Enter target price: ");
-        String priceInput = scanner.nextLine().trim();
-        double targetPrice;
-        
-        try {
-            targetPrice = Double.parseDouble(priceInput);
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid price format. Please enter a valid number.");
-            return;
-        }
-        
-        // Find product name from any store
-        String productName = "Unknown Product";
-        for (String store : PREDEFINED_STORES.values()) {
-            if (store.equals("All stores")) continue;
-            
-            Product product = marketDataRepository.getProduct(store, productId);
-            if (product != null) {
-                productName = product.getName();
-                break;
-            }
-        }
-        
-        priceAlertService.createAlert(productId, productName, targetPrice, "user1");
-    }
-
-    private static void viewActiveAlerts() {
-        List<PriceAlert> alerts = priceAlertService.getActiveAlerts();
-        
-        if (alerts.isEmpty()) {
-            System.out.println("No active alerts.");
-            return;
-        }
-        
-        System.out.println("\n==== Active Price Alerts ====");
-        for (int i = 0; i < alerts.size(); i++) {
-            PriceAlert alert = alerts.get(i);
-            System.out.printf("%d) %s (ID: %s) - Target price: %.2f\n", 
-                i+1, alert.getProductName(), alert.getProductId(), alert.getTargetPrice());
-        }
-    }
-
-    private static void checkAlerts(Scanner scanner) {
-        List<PriceAlert> triggered = priceAlertService.checkAlerts(currentDate);
-        
-        if (triggered.isEmpty()) {
-            System.out.println("No price alerts triggered for " + currentDate);
-        }
-    }
-
     private static void handleValuePerUnit(Scanner scanner) {
         boolean done = false;
         while (!done) {
@@ -706,65 +603,4 @@ public class App {
             System.out.println("Failed to save baskets to disk: " + e.getMessage());
         }
     }
-
-    private static void editAlert(Scanner scanner) {
-        List<PriceAlert> alerts = priceAlertService.getActiveAlerts();
-        if (alerts.isEmpty()) {
-            System.out.println("No active alerts to edit.");
-            return;
-        }
-        System.out.println("\n==== Edit Price Alert ====");
-        for (int i = 0; i < alerts.size(); i++) {
-            PriceAlert alert = alerts.get(i);
-            System.out.printf("%d) %s (ID: %s) - Target price: %.2f\n", i+1, alert.getProductName(), alert.getProductId(), alert.getTargetPrice());
-        }
-        int choice = readInt(scanner, "Select an alert to edit (0 to cancel): ");
-        if (choice == 0 || choice > alerts.size()) {
-            System.out.println("Operation cancelled or invalid selection.");
-            return;
-        }
-        PriceAlert alert = alerts.get(choice - 1);
-        scanner.nextLine();
-        System.out.print("Enter new product ID (leave blank to keep current): ");
-        String newProductId = scanner.nextLine().trim();
-        if (!newProductId.isEmpty()) {
-            alert.setProductId(newProductId);
-            System.out.println("Product ID updated.");
-        }
-        System.out.print("Enter new target price (leave blank to keep current): ");
-        String priceInput = scanner.nextLine().trim();
-        if (!priceInput.isEmpty()) {
-            try {
-                double newPrice = Double.parseDouble(priceInput);
-                alert.setTargetPrice(newPrice);
-                System.out.println("Target price updated.");
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid price format. Keeping current price.");
-            }
-        }
-    }
-
-    private static void deleteAlert(Scanner scanner) {
-        List<PriceAlert> alerts = priceAlertService.getActiveAlerts();
-        if (alerts.isEmpty()) {
-            System.out.println("No active alerts to delete.");
-            return;
-        }
-        System.out.println("\n==== Delete Price Alert ====");
-        for (int i = 0; i < alerts.size(); i++) {
-            PriceAlert alert = alerts.get(i);
-            System.out.printf("%d) %s (ID: %s) - Target price: %.2f\n", i+1, alert.getProductName(), alert.getProductId(), alert.getTargetPrice());
-        }
-        int choice = readInt(scanner, "Select an alert to delete (0 to cancel): ");
-        if (choice == 0 || choice > alerts.size()) {
-            System.out.println("Operation cancelled or invalid selection.");
-            return;
-        }
-        PriceAlert alert = alerts.get(choice - 1);
-        // Remove from repository and persist
-        priceAlertService.deleteAlert(alert.getProductId());
-        System.out.println("Alert deleted.");
-    }
 }
-
-
