@@ -12,6 +12,9 @@ public class Discount {
     private int discountPercent;
     private String datePosted; // Date when this discount was recorded (from CSV filename)
 
+    public Discount() {
+    }
+
     public Discount(String productId, String name, String brand, String quantity, String unit,
                     String category, String fromDate, String toDate, int discountPercent) {
         this.productId = productId;

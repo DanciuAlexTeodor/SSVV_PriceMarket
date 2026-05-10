@@ -1,10 +1,10 @@
 Optimized Basket Split for 2025-05-01:
 
 
-Kaufland Shopping List:
-- Banana: 9,00 RON (-10%)
-Subtotal: 9,00 RON
+Lidl Shopping List:
+- lapte zuzu x2: 17.64 RON (-10%)
+Subtotal: 17.64 RON
 
-Original total (no discounts): 10,00 RON
-Optimized total: 9,00 RON
-Total money saved: 1,00 RON
+Original total (no discounts): 19.60 RON
+Optimized total: 17.64 RON
+Total money saved: 1.96 RON

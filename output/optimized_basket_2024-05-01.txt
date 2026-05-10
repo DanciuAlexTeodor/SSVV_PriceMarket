@@ -1,0 +1,7 @@
+Optimized Basket Split for 2024-05-01:
+
+Product P001 not found in any store.
+
+Original total (no discounts): 0.00 RON
+Optimized total: 0.00 RON
+Total money saved: 0.00 RON

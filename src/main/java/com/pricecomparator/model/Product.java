@@ -11,6 +11,9 @@ public class Product {
     private String currency;
     private String datePosted; // Date when this product price was recorded
 
+    public Product() {
+    }
+
     public Product(String id, String name, String category, String brand, double quantity, String unit, double price, String currency) {
         this.id = id;
         this.name = name;

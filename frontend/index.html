@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Comparator Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Price Comparator</h1>
+            <nav>
+                <button id="nav-search" class="nav-btn active">Search Prices</button>
+                <button id="nav-admin" class="nav-btn">Admin (Manage Products)</button>
+                <button id="nav-cart" class="nav-btn">Shopping Cart</button>
+                <button id="nav-reports" class="nav-btn">Reports</button>
+            </nav>
+        </header>
+            <!-- VIEW VIEW: Reports -->
+            <section id="view-reports" class="tab-content hidden">
+                <h2>Discount Reports</h2>
+                
+                <div class="form-row">
+                    <select id="reportType">
+                        <option value="best-discounts">View Best Discounts (Highest %)</option>
+                        <option value="newest-discounts">View Newest Discounts (Recently added)</option>
+                    </select>
+                    <input type="date" id="reportDate" value="2026-05-10" />
+                </div>
+                
+                <div class="form-row">
+                    <input type="text" id="reportStore" placeholder="Store (Optional, e.g. Lidl)" />
+                    <input type="number" id="reportLimit" placeholder="Max Results (e.g. 10)" value="10" />
+                </div>
+
+                <div class="form-row">
+                    <button id="generateReportBtn" class="action-btn">Generate Report</button>
+                </div>
+
+                <div id="reportLoading" class="hidden">Generating Report...</div>
+                
+                <div id="reportResult" class="hidden" style="margin-top:20px; padding:15px; background:#fff; border:1px solid #ccc; border-radius: 4px; font-family: monospace; white-space: pre-wrap; line-height: 1.5;">
+                    <!-- Report lines inject here -->
+                </div>
+            </section>
+
+            <!-- VIEW VIEW: Shopping Cart Optimization -->
+            <section id="view-cart" class="tab-content hidden">
+                <h2>Optimize Shopping Cart</h2>
+                
+                <div class="cart-container">
+                    <div class="cart-input-area">
+                        <div class="form-row">
+                            <input type="text" id="cartProductId" placeholder="Product ID (e.g. P001)" />
+                            <input type="number" id="cartQuantity" placeholder="Qty" value="1" min="1" />
+                            <button id="addToCartBtn">Add to Cart</button>
+                        </div>
+                        
+                        <div class="form-row" style="margin-top: 20px;">
+                            <input type="date" id="cartDate" value="2026-05-10" />
+                            <button id="optimizeBtn" class="action-btn">Find Lowest Price</button>
+                        </div>
+                    </div>
+
+                    <div class="cart-list-area">
+                        <h3>Current Cart:</h3>
+                        <ul id="cartList"></ul>
+                        <button id="clearCartBtn" style="background:#dc3545; width:100%; margin-top:10px;">Clear Cart</button>
+                    </div>
+                </div>
+
+                <div id="optimizationLoading" class="hidden">Optimizing... Please wait...</div>
+                
+                <div id="optimizationResult" class="hidden" style="margin-top:20px; padding:15px; background:white; border:1px solid #ddd; white-space: pre-wrap; font-family: monospace;">
+                    <!-- Results populate here -->
+                </div>
+            </section>
+
+        <main>
+            <!-- VIEW VIEW: Searching Prices -->
+            <section id="view-search" class="tab-content active-tab">
+                <div class="form-row">
+                    <input type="text" id="productIdInput" placeholder="Enter Product ID (e.g. P001)" />
+                    <input type="date" id="dateInput" value="2026-05-10" />
+                    <button id="searchBtn">Search History</button>
+                </div>
+                
+                <div id="loading" class="hidden">Loading...</div>
+                <div id="error-message" class="hidden error"></div>
+
+                <table id="resultsTable" class="hidden">
+                    <thead>
+                        <tr>
+                            <th>Store</th>
+                            <th>Date</th>
+                            <th>Brand</th>
+                            <th>Category</th>
+                            <th>Price (RON)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </section>
+
+            <!-- VIEW VIEW: Admin / CRUD Operations -->
+            <section id="view-admin" class="tab-content hidden">
+                <h2>Manage Products</h2>
+                <div class="admin-panel">
+                    
+                    <div class="form-group">
+                        <label>Action:</label>
+                        <select id="crudAction">
+                            <option value="POST">Create New Product</option>
+                            <option value="PUT">Update Existing Product</option>
+                            <option value="DELETE">Delete Product</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <input type="text" id="adminStore" placeholder="Store (e.g. Lidl)" />
+                        <input type="date" id="adminDate" value="2025-05-01" />
+                    </div>
+
+                    <!-- Fields that apply to Create/Update -->
+                    <div id="productFields">
+                        <div class="form-row">
+                            <input type="text" id="adminId" placeholder="Product ID (e.g. P100)" />
+                            <input type="text" id="adminName" placeholder="Product Name" />
+                        </div>
+                        <div class="form-row">
+                            <input type="text" id="adminCategory" placeholder="Category" />
+                            <input type="text" id="adminBrand" placeholder="Brand" />
+                        </div>
+                        <div class="form-row">
+                            <input type="number" id="adminPrice" placeholder="Price" step="0.01" />
+                            <input type="text" id="adminUnit" placeholder="Unit (e.g. l, kg)" />
+                            <input type="number" id="adminQuantity" placeholder="Quantity Multiplier" step="0.01" />
+                        </div>
+                    </div>
+
+                    <button id="submitAdminBtn" class="action-btn">Submit Action</button>
+                    <div id="adminMessage" class="hidden"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

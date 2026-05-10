@@ -96,4 +96,9 @@ public class ProductRepository {
     public Map<String, Map<LocalDate, List<Product>>> getAllProductData() {
         return storeProductsByDate;
     }
+    
+    public void clearCache() {
+        this.cachedProducts.clear();
+        this.cachedDate = null;
+    }
 } 
