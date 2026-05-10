@@ -1,19 +1,26 @@
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\app\App.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\loader\DiscountLoader.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\loader\MarketDataLoader.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\loader\ProductLoader.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\model\Discount.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\model\PricePoint.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\model\Product.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\repository\DiscountRepository.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\repository\MarketDataRepository.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\repository\ProductRepository.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\service\BasketOptimizer.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\service\BestDiscounts.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\service\NewestDiscounts.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\service\PriceDataService.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\service\ValueUnit.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\validator\DiscountValidator.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\validator\ProductValidator.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\validator\ValidationException.java
-C:\Users\Alex\Desktop\PriceMarketGitHub\SSVV_PriceMarket\src\main\java\com\pricecomparator\validator\Validator.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\service\PriceDataService.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\service\ValueUnit.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\loader\ProductLoader.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\validator\DiscountValidator.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\model\Product.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\validator\Validator.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\loader\MarketDataLoader.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\controller\ReportController.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\controller\ProductController.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\validator\ProductValidator.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\controller\OptimizerController.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\model\PricePoint.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\repository\ProductRepository.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\AppConfig.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\controller\PriceController.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\app\App.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\PriceComparatorApplication.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\repository\DiscountRepository.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\repository\MarketDataRepository.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\model\Discount.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\service\NewestDiscounts.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\service\BasketOptimizer.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\controller\DiscountController.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\service\BestDiscounts.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\loader\DiscountLoader.java
+C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\main\java\com\pricecomparator\validator\ValidationException.java

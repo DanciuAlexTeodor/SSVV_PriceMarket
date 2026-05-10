@@ -88,13 +88,38 @@ public class MarketDataRepository {
 
     // --- Admin CRUD Operations for Product ---
     public void addProduct(String store, String dateStr, Product product) {
-        Map<String, List<Product>> products = productRepository.getProductsForDate(dateStr);
-        products.computeIfAbsent(store, k -> new ArrayList<>()).add(product);
+        LocalDate date = LocalDate.parse(dateStr);
+        Map<String, Map<LocalDate, List<Product>>> allData = productRepository.getAllProductData();
+        
+        // Ensure store and date structures exist directly in the raw data
+        allData.computeIfAbsent(store, k -> new HashMap<>())
+               .computeIfAbsent(date, k -> new ArrayList<>());
+
+        List<Product> list = allData.get(store).get(date);
+        
+        // If it already exists for this exact date, replace it, otherwise add it.
+        boolean found = false;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId().equals(product.getId())) {
+                list.set(i, product);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            list.add(product);
+        }
+        
+        // Clear the cache so searches immediately see the new data
+        productRepository.clearCache();
     }
+
     public void updateProduct(String store, String dateStr, String productId, Product newProduct) {
-        Map<String, List<Product>> products = productRepository.getProductsForDate(dateStr);
-        if (products.containsKey(store)) {
-            List<Product> list = products.get(store);
+        LocalDate date = LocalDate.parse(dateStr);
+        Map<String, Map<LocalDate, List<Product>>> allData = productRepository.getAllProductData();
+        
+        if (allData.containsKey(store) && allData.get(store).containsKey(date)) {
+            List<Product> list = allData.get(store).get(date);
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getId().equals(productId)) {
                     list.set(i, newProduct);
@@ -102,11 +127,20 @@ public class MarketDataRepository {
                 }
             }
         }
+        
+        // Clear the cache so searches immediately see the updated data
+        productRepository.clearCache();
     }
+
     public void deleteProduct(String store, String dateStr, String productId) {
-        Map<String, List<Product>> products = productRepository.getProductsForDate(dateStr);
-        if (products.containsKey(store)) {
-            products.get(store).removeIf(p -> p.getId().equals(productId));
+        LocalDate date = LocalDate.parse(dateStr);
+        Map<String, Map<LocalDate, List<Product>>> allData = productRepository.getAllProductData();
+        
+        if (allData.containsKey(store) && allData.get(store).containsKey(date)) {
+            allData.get(store).get(date).removeIf(p -> p.getId().equals(productId));
         }
+        
+        // Clear the cache so searches immediately reflect the deletion
+        productRepository.clearCache();
     }
 } 
