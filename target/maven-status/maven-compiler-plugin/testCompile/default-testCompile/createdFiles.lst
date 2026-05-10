@@ -1,0 +1,6 @@
+com\pricecomparator\service\BestDiscountsTest.class
+com\pricecomparator\service\PriceAlertServiceTest.class
+com\pricecomparator\service\BasketOptimizerTest.class
+com\pricecomparator\service\NewestDiscountsTest.class
+com\pricecomparator\service\ValueUnitTest.class
+com\pricecomparator\service\PriceDataServiceTest.class
