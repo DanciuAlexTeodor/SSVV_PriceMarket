@@ -115,4 +115,34 @@ public class DiscountRepository {
     public Map<String, Map<LocalDate, List<Discount>>> getAllDiscountData() {
         return storeDiscountsByDate;
     }
+
+    public void addDiscount(String store, String dateStr, Discount discount) {
+        LocalDate targetDate = LocalDate.parse(dateStr, DATE_FORMATTER);
+        storeDiscountsByDate.computeIfAbsent(store, k -> new HashMap<>())
+            .computeIfAbsent(targetDate, k -> new ArrayList<>())
+            .add(discount);
+        cachedDiscounts.clear(); // invalidate cache
+    }
+
+    public void updateDiscount(String store, String dateStr, String productId, Discount newDiscount) {
+        LocalDate targetDate = LocalDate.parse(dateStr, DATE_FORMATTER);
+        if (storeDiscountsByDate.containsKey(store) && storeDiscountsByDate.get(store).containsKey(targetDate)) {
+            List<Discount> list = storeDiscountsByDate.get(store).get(targetDate);
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getProductId().equals(productId)) {
+                    list.set(i, newDiscount);
+                    cachedDiscounts.clear();
+                    break;
+                }
+            }
+        }
+    }
+
+    public void deleteDiscount(String store, String dateStr, String productId) {
+        LocalDate targetDate = LocalDate.parse(dateStr, DATE_FORMATTER);
+        if (storeDiscountsByDate.containsKey(store) && storeDiscountsByDate.get(store).containsKey(targetDate)) {
+            storeDiscountsByDate.get(store).get(targetDate).removeIf(d -> d.getProductId().equals(productId));
+            cachedDiscounts.clear();
+        }
+    }
 } 

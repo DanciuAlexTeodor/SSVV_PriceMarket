@@ -27,6 +27,7 @@ public class App {
     private static final int OPTION_NEWEST_DISCOUNTS = 3;
     private static final int OPTION_VALUE_PER_UNIT = 4;
     private static final int OPTION_DATA_POINTS_ANALYSIS = 5;
+    private static final int OPTION_ADMIN_PANEL = 6;
     private static final int OPTION_EXIT = 0;
 
     private static final Map<Integer, List<String>> PREDEFINED_BASKETS = new LinkedHashMap<>();
@@ -102,6 +103,9 @@ public class App {
                 case OPTION_DATA_POINTS_ANALYSIS:
                     handleDataPointsAnalysis(scanner);
                     break;
+                case OPTION_ADMIN_PANEL:
+                    handleAdminPanel(scanner);
+                    break;
                 case OPTION_EXIT:
                     System.out.println("Goodbye!");
                     return;
@@ -128,6 +132,7 @@ public class App {
         System.out.println(OPTION_NEWEST_DISCOUNTS + ") Show newest discounts");
         System.out.println(OPTION_VALUE_PER_UNIT + ") Show best value per unit");
         System.out.println(OPTION_DATA_POINTS_ANALYSIS + ") Show data points for a specific product");
+        System.out.println(OPTION_ADMIN_PANEL + ") Admin Panel (Manage Products & Discounts)");
         System.out.println(OPTION_EXIT + ") Exit");
     }
 
@@ -601,6 +606,121 @@ public class App {
             gson.toJson(savedBaskets, writer);
         } catch (IOException e) {
             System.out.println("Failed to save baskets to disk: " + e.getMessage());
+        }
+    }
+
+    private static void handleAdminPanel(Scanner scanner) {
+        boolean done = false;
+        while (!done) {
+            System.out.println("\n==== Admin Panel ====");
+            System.out.println("1) Manage Products");
+            System.out.println("2) Manage Discounts");
+            System.out.println("0) Back to main menu");
+            int choice = readInt(scanner, "Your choice: ");
+            switch (choice) {
+                case 1:
+                    handleManageProducts(scanner);
+                    break;
+                case 2:
+                    handleManageDiscounts(scanner);
+                    break;
+                case 0:
+                    done = true;
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+    }
+
+    private static void handleManageProducts(Scanner scanner) {
+        System.out.println("\n--- Manage Products ---");
+        System.out.println("1) Add Product");
+        System.out.println("2) Edit Product Price");
+        System.out.println("3) Delete Product");
+        System.out.println("0) Back");
+        int choice = readInt(scanner, "Choice: ");
+        if (choice == 0) return;
+
+        String store = getDesiredStore(scanner);
+        if (store == null || store.equals("All stores")) {
+            System.out.println("Please select a specific store.");
+            return;
+        }
+
+        scanner.nextLine(); // clear buffer
+        System.out.print("Enter Product ID: ");
+        String id = scanner.nextLine().trim();
+
+        if (choice == 1) {
+            System.out.print("Name: "); String name = scanner.nextLine().trim();
+            System.out.print("Category: "); String cat = scanner.nextLine().trim();
+            System.out.print("Brand: "); String brand = scanner.nextLine().trim();
+            System.out.print("Quantity: "); double qty = Double.parseDouble(scanner.nextLine().trim());
+            System.out.print("Unit (kg, l, buc, etc.): "); String unit = scanner.nextLine().trim();
+            System.out.print("Price: "); double price = Double.parseDouble(scanner.nextLine().trim());
+            System.out.print("Currency (RON): "); String curr = scanner.nextLine().trim();
+            
+            Product p = new Product(id, name, cat, brand, qty, unit, price, curr, currentDate);
+            marketDataRepository.addProduct(store, currentDate, p);
+            System.out.println("Product added successfully!");
+        } else if (choice == 2) {
+            Product p = marketDataRepository.getProduct(store, id, currentDate);
+            if (p == null) { System.out.println("Product not found!"); return; }
+            System.out.print("New Price (current: " + p.getPrice() + "): ");
+            double price = Double.parseDouble(scanner.nextLine().trim());
+            Product updated = new Product(id, p.getName(), p.getCategory(), p.getBrand(), p.getQuantity(), p.getUnit(), price, p.getCurrency(), currentDate);
+            marketDataRepository.updateProduct(store, currentDate, id, updated);
+            System.out.println("Product updated successfully!");
+        } else if (choice == 3) {
+            marketDataRepository.deleteProduct(store, currentDate, id);
+            System.out.println("Product deleted successfully!");
+        }
+    }
+
+    private static void handleManageDiscounts(Scanner scanner) {
+        System.out.println("\n--- Manage Discounts ---");
+        System.out.println("1) Add Discount");
+        System.out.println("2) Edit Discount Percentage");
+        System.out.println("3) Delete Discount");
+        System.out.println("0) Back");
+        int choice = readInt(scanner, "Choice: ");
+        if (choice == 0) return;
+
+        String store = getDesiredStore(scanner);
+        if (store == null || store.equals("All stores")) {
+            System.out.println("Please select a specific store.");
+            return;
+        }
+
+        scanner.nextLine(); // clear buffer
+        System.out.print("Enter Product ID: ");
+        String id = scanner.nextLine().trim();
+
+        if (choice == 1) {
+            System.out.print("Product Name: "); String name = scanner.nextLine().trim();
+            System.out.print("Brand: "); String brand = scanner.nextLine().trim();
+            System.out.print("Quantity: "); String qty = scanner.nextLine().trim();
+            System.out.print("Unit: "); String unit = scanner.nextLine().trim();
+            System.out.print("Category: "); String cat = scanner.nextLine().trim();
+            System.out.print("From Date (YYYY-MM-DD): "); String from = scanner.nextLine().trim();
+            System.out.print("To Date (YYYY-MM-DD): "); String to = scanner.nextLine().trim();
+            System.out.print("Discount %: "); int pct = Integer.parseInt(scanner.nextLine().trim());
+
+            Discount d = new Discount(id, name, brand, qty, unit, cat, from, to, pct, currentDate);
+            marketDataRepository.addDiscount(store, currentDate, d);
+            System.out.println("Discount added successfully!");
+        } else if (choice == 2) {
+            Discount d = marketDataRepository.getActiveDiscount(store, id, currentDate);
+            if (d == null) { System.out.println("Active discount not found!"); return; }
+            System.out.print("New Discount % (current: " + d.getDiscountPercent() + "): ");
+            int pct = Integer.parseInt(scanner.nextLine().trim());
+            Discount updated = new Discount(id, d.getProductName(), d.getBrand(), d.getQuantity(), d.getUnit(), d.getCategory(), d.getFromDate(), d.getToDate(), pct, currentDate);
+            marketDataRepository.updateDiscount(store, currentDate, id, updated);
+            System.out.println("Discount updated successfully!");
+        } else if (choice == 3) {
+            marketDataRepository.deleteDiscount(store, currentDate, id);
+            System.out.println("Discount deleted successfully!");
         }
     }
 }

@@ -77,4 +77,16 @@ public class Discount {
     public String getToDate() {
         return toDate;
     }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public String getCategory() {
+        return category;
+    }
 }
