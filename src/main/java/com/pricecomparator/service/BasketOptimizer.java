@@ -29,7 +29,7 @@ public class BasketOptimizer {
      * @param basketProductIds List of product IDs (with repetitions for quantity)
      * @param date The date for which to optimize prices
      */
-    public void optimizeBasketSplit(List<String> basketProductIds, String date) {
+    public String optimizeBasketSplit(List<String> basketProductIds, String date) {
         // get data by the given date
         Map<String, List<Product>> storeProducts = marketDataRepository.getProductsForDate(date);
 
@@ -107,26 +107,7 @@ public class BasketOptimizer {
         outputLines.add("Optimized total: " + String.format("%.2f", totalDiscountedPrice) + " RON");
         outputLines.add("Total money saved: " + String.format("%.2f", savings) + " RON");
 
-        // Write the result to a file and print the location
-        writeOutputToFile("output/optimized_basket_" + date + ".txt", outputLines);
-        System.out.println("Result saved to: output/optimized_basket_" + date + ".txt");
-    }
-
-    private static void writeOutputToFile(String filePath, List<String> lines) {
-        try {
-            new File("output").mkdir(); // create output folder if missing
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(filePath), StandardCharsets.UTF_8));
-
-            for (String line : lines) {
-                writer.write(line);
-                writer.newLine();
-            }
-
-            writer.close();
-        } catch (IOException e) {
-            System.err.println("Failed to write output file: " + e.getMessage());
-        }
+        return String.join("\n", outputLines);
     }
 
     private static String capitalize(String text) {

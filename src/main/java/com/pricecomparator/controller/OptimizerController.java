@@ -21,15 +21,7 @@ public class OptimizerController {
 
     @PostMapping
     public String optimizeBasket(@RequestParam String date, @RequestBody List<String> productIds) {
-        // Run the original optimization logic (which writes to output/optimized_basket_...)
-        basketOptimizer.optimizeBasketSplit(productIds, date);
-        
-        // Read the generated file and return it as a structured string back to the frontend
-        try {
-            String fileName = "output/optimized_basket_" + date + ".txt";
-            return Files.readString(Paths.get(fileName));
-        } catch (IOException e) {
-            return "Error reading optimization result: " + e.getMessage();
-        }
+        // Return the formatted string generated directly by the optimizer
+        return basketOptimizer.optimizeBasketSplit(productIds, date);
     }
 }
