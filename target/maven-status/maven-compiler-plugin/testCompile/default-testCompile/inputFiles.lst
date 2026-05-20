@@ -1,6 +1,11 @@
-C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\test\java\com\pricecomparator\service\BestDiscountsTest.java
-C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\test\java\com\pricecomparator\service\NewestDiscountsTest.java
-C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\test\java\com\pricecomparator\service\PriceDataServiceTest.java
-C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\test\java\com\pricecomparator\service\ValueUnitTest.java
-C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\test\java\com\pricecomparator\service\BasketOptimizerTest.java
-C:\University\Sem 6\SSVV\SSVV_PriceMarket\src\test\java\com\pricecomparator\service\MarketDataRepositoryCrudTest.java
+/home/crtdavid/Projects/IdeaProjects/SSVV_PriceMarket/src/test/java/com/pricecomparator/service/BasketOptimizerTest.java
+/home/crtdavid/Projects/IdeaProjects/SSVV_PriceMarket/src/test/java/com/pricecomparator/testing/bbt/ValueUnitBBT.java
+/home/crtdavid/Projects/IdeaProjects/SSVV_PriceMarket/src/test/java/com/pricecomparator/service/MarketDataRepositoryCrudTest.java
+/home/crtdavid/Projects/IdeaProjects/SSVV_PriceMarket/src/test/java/com/pricecomparator/testing/wbt/BasketOptimizerWBT.java
+/home/crtdavid/Projects/IdeaProjects/SSVV_PriceMarket/src/test/java/com/pricecomparator/service/NewestDiscountsTest.java
+/home/crtdavid/Projects/IdeaProjects/SSVV_PriceMarket/src/test/java/com/pricecomparator/testing/bbt/BasketOptimizerBBT.java
+/home/crtdavid/Projects/IdeaProjects/SSVV_PriceMarket/src/test/java/com/pricecomparator/service/PriceDataServiceTest.java
+/home/crtdavid/Projects/IdeaProjects/SSVV_PriceMarket/src/test/java/com/pricecomparator/testing/integration/PriceComparatorIntegrationTest.java
+/home/crtdavid/Projects/IdeaProjects/SSVV_PriceMarket/src/test/java/com/pricecomparator/testing/wbt/ValueUnitWBT.java
+/home/crtdavid/Projects/IdeaProjects/SSVV_PriceMarket/src/test/java/com/pricecomparator/service/BestDiscountsTest.java
+/home/crtdavid/Projects/IdeaProjects/SSVV_PriceMarket/src/test/java/com/pricecomparator/service/ValueUnitTest.java
